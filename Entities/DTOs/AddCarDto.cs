@@ -1,4 +1,5 @@
 using Core.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Entities.Concrete
 {
@@ -10,5 +11,6 @@ namespace Entities.Concrete
             public int DailyPrice { get; set; }
             public string ModelYear { get; set; }
             public string Description { get; set; }
+            public IFormFile file { get; set; }
       }
 }

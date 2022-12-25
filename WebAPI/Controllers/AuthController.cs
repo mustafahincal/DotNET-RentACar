@@ -4,67 +4,67 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : Controller
-    {
-        private IAuthService _authService;
+      [Route("api/[controller]")]
+      [ApiController]
+      public class AuthController : Controller
+      {
+            private IAuthService _authService;
 
-        public AuthController(IAuthService authService)
-        {
-            _authService = authService;
-        }
-
-        [HttpPost("login")]
-        public ActionResult Login(UserForLoginDto userForLoginDto) 
-        {
-            var userToLogin = _authService.Login(userForLoginDto);
-            if (!userToLogin.Success)
+            public AuthController(IAuthService authService)
             {
-                return BadRequest(userToLogin);
+                  _authService = authService;
             }
 
-            var result = _authService.CreateAccessToken(userToLogin.Data);
-            if (result.Success)
+            [HttpPost("login")]
+            public ActionResult Login(UserForLoginDto userForLoginDto)
             {
-                
-                return Ok(result);
+                  var userToLogin = _authService.Login(userForLoginDto);
+                  if (!userToLogin.Success)
+                  {
+                        return BadRequest(userToLogin);
+                  }
+
+                  var result = _authService.CreateAccessToken(userToLogin.Data);
+                  if (result.Success)
+                  {
+
+                        return Ok(result);
+                  }
+
+                  return BadRequest(result);
             }
 
-            return BadRequest(result);
-        }
-
-        [HttpPost("register")]
-        public ActionResult Register(UserForRegisterDto userForRegisterDto)
-        {
-            var userExists = _authService.UserExists(userForRegisterDto.Email);
-            if (!userExists.Success)
+            [HttpPost("register")]
+            public ActionResult Register(UserForRegisterDto userForRegisterDto)
             {
-                return BadRequest(userExists);
+                  var userExists = _authService.UserExists(userForRegisterDto.Email);
+                  if (!userExists.Success)
+                  {
+                        return BadRequest(userExists);
+                  }
+
+                  var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+
+                  var result = _authService.CreateAccessToken(registerResult.Data);
+                  if (result.Success)
+                  {
+                        return Ok(result);
+                  }
+
+                  return BadRequest(result);
             }
 
-            var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-
-            var result = _authService.CreateAccessToken(registerResult.Data);
-            if (result.Success)
+            [HttpPost("changepassword")]
+            public ActionResult ChangeUserPassword(ChangePasswordDto changePasswordDto)
             {
-                return Ok(result);
+                  var changePasswordResult = _authService.ChangePassword(changePasswordDto);
+
+                  if (changePasswordResult.Success)
+                  {
+                        return Ok(changePasswordResult);
+                  }
+
+                  return BadRequest(changePasswordResult);
             }
-
-            return BadRequest(result);
-        }
-
-        [HttpPost("changepassword")]
-        public ActionResult ChangeUserPassword(ChangePasswordDto changePasswordDto)
-        {
-            var changePasswordResult = _authService.ChangePassword(changePasswordDto);
-
-            if (changePasswordResult.Success)
-            {
-                return Ok(changePasswordResult);
-            }
-
-            return BadRequest(changePasswordResult);
-        }
-    }
+      }
 }

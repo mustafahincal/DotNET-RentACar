@@ -47,7 +47,8 @@ namespace DataAccess.Concrete.EntityFramework
             };
                   OperationClaim[] operationClaims = {
                 new OperationClaim { Id = 1, Name = "Admin" },
-                new OperationClaim { Id = 2, Name = "Kullanıcı" }
+                new OperationClaim { Id = 2, Name = "Editor" },
+                new OperationClaim { Id = 3, Name = "Kullanıcı" }
             };
                   UserOperationClaim[] userOperationClaims = { new UserOperationClaim { Id = 1, UserId = 1, OperationClaimId = 1 } };
                   modelBuilder.Entity<User>().HasData(users);

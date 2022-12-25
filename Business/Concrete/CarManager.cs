@@ -19,13 +19,14 @@ namespace Business.Concrete
       public class CarManager : ICarService
       {
             ICarDal _carDal;
-            public CarManager(ICarDal carDal)
+            ICarImageService _carImageService;
+            public CarManager(ICarDal carDal, ICarImageService carImageService)
             {
                   _carDal = carDal;
+                  _carImageService = carImageService;
             }
 
             [ValidationAspect(typeof(CarValidator))]
-            [SecuredOperation("car.add,Admin")]
             [CacheRemoveAspect("IProductService.Get")]
             public IResult Add(AddCarDto addCarDto)
             {
@@ -40,13 +41,18 @@ namespace Business.Concrete
                   };
 
                   _carDal.Add(carToAdd);
+
+                  CarImage carImageToAdd = new CarImage();
+                  _carImageService.Add(addCarDto.file, carImageToAdd, carToAdd.Id);
+
                   //return new Result(true,"Ekleme yapıldı")
                   return new SuccessResult("Araba eklendi");
 
             }
-            public IResult Delete(Car car)
+            public IResult Delete(DeleteCarDto deleteCarDto)
             {
-                  _carDal.Delete(car);
+                  Car carToDelete = _carDal.Get(c => c.Id == deleteCarDto.CarId);
+                  _carDal.Delete(carToDelete);
                   return new SuccessResult("Araba silindi");
             }
 

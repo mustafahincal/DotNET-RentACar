@@ -3,7 +3,9 @@ using Business.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
@@ -107,8 +109,10 @@ namespace WebAPI.Controllers
             }
 
             [HttpPost("add")]
-            public IActionResult Add(AddCarDto addCarDto)
+            public IActionResult Add([FromForm] IFormFile file, [FromForm] string body)
             {
+                  var addCarDto = JsonConvert.DeserializeObject<AddCarDto>(body);
+                  addCarDto.file = file;
                   var result = _carService.Add(addCarDto);
                   if (result.Success)
                   {
@@ -118,9 +122,9 @@ namespace WebAPI.Controllers
             }
 
             [HttpPost("delete")]
-            public IActionResult Delete(Car car)
+            public IActionResult Delete(DeleteCarDto deleteCarDto)
             {
-                  var result = _carService.Delete(car);
+                  var result = _carService.Delete(deleteCarDto);
                   if (result.Success)
                   {
                         return Ok(result);

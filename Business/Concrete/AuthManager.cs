@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Abstract;
+
 
 namespace Business.Concrete
 {
@@ -17,11 +19,13 @@ namespace Business.Concrete
       {
             private IUserService _userService;
             private ITokenHelper _tokenHelper;
+            private IUserOperationClaimDal _userOperationClaimDal;
 
-            public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+            public AuthManager(IUserService userService, ITokenHelper tokenHelper, IUserOperationClaimDal userOperationClaimDal)
             {
                   _userService = userService;
                   _tokenHelper = tokenHelper;
+                  _userOperationClaimDal = userOperationClaimDal;
             }
 
             public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -35,9 +39,21 @@ namespace Business.Concrete
                         LastName = userForRegisterDto.LastName,
                         PasswordHash = passwordHash,
                         PasswordSalt = passwordSalt,
-                        Status = true
+                        Status = userForRegisterDto.Status
                   };
                   _userService.Add(user);
+
+                  // 1 - Admin
+                  // 2 - Editör
+                  // 3 - Kullanıcı
+                  int operationClaimIdControl = user.Status ? 2 : 3;
+                  UserOperationClaim userOperationClaimToAdd = new UserOperationClaim
+                  {
+                        UserId = user.Id,
+                        OperationClaimId = operationClaimIdControl
+                  };
+                  _userOperationClaimDal.Add(userOperationClaimToAdd);
+
                   return new SuccessDataResult<User>(user, Messages.UserRegistered);
             }
 
