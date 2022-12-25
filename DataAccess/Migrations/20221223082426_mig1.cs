@@ -226,6 +226,25 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "OperationClaims",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Kullanıcı" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserOperationClaims",
+                columns: new[] { "Id", "OperationClaimId", "UserId" },
+                values: new object[] { 1, 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "Status" },
+                values: new object[] { 1, "admin@mail.com", "Admin", "Admin", new byte[] { 43, 77, 51, 40, 225, 243, 191, 251, 170, 221, 89, 90, 117, 235, 86, 246, 250, 60, 65, 252, 200, 89, 83, 62, 147, 221, 22, 53, 69, 189, 182, 101, 16, 29, 40, 105, 211, 233, 194, 149, 210, 123, 196, 18, 202, 51, 87, 161, 40, 250, 247, 63, 38, 102, 203, 211, 137, 112, 27, 251, 218, 190, 245, 246 }, new byte[] { 122, 174, 70, 70, 67, 224, 157, 103, 45, 119, 191, 248, 70, 243, 48, 111, 35, 152, 249, 171, 173, 185, 143, 157, 146, 78, 218, 19, 212, 89, 128, 157, 189, 19, 116, 31, 109, 213, 48, 238, 72, 63, 240, 46, 253, 7, 173, 253, 103, 136, 24, 177, 218, 231, 20, 104, 138, 249, 130, 194, 213, 81, 66, 156, 201, 86, 250, 112, 53, 76, 147, 16, 115, 117, 83, 27, 58, 185, 199, 123, 45, 45, 135, 142, 189, 49, 174, 1, 205, 246, 1, 225, 188, 234, 144, 100, 37, 144, 52, 112, 34, 1, 164, 163, 73, 183, 39, 36, 146, 189, 233, 168, 132, 143, 115, 142, 24, 60, 128, 226, 55, 27, 211, 46, 15, 165, 126, 99 }, true });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CarImages_CarId",
                 table: "CarImages",
