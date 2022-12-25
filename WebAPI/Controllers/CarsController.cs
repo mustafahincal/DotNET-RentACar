@@ -107,9 +107,9 @@ namespace WebAPI.Controllers
             }
 
             [HttpPost("add")]
-            public IActionResult Add(Car car)
+            public IActionResult Add(AddCarDto addCarDto)
             {
-                  var result = _carService.Add(car);
+                  var result = _carService.Add(addCarDto);
                   if (result.Success)
                   {
                         return Ok(result);

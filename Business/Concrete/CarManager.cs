@@ -27,10 +27,19 @@ namespace Business.Concrete
             [ValidationAspect(typeof(CarValidator))]
             [SecuredOperation("car.add,Admin")]
             [CacheRemoveAspect("IProductService.Get")]
-            public IResult Add(Car car)
+            public IResult Add(AddCarDto addCarDto)
             {
+                  Car carToAdd = new Car
+                  {
+                        ModelId = addCarDto.ModelId,
+                        BrandId = addCarDto.BrandId,
+                        ColorId = addCarDto.ColorId,
+                        DailyPrice = addCarDto.DailyPrice,
+                        Description = addCarDto.Description,
+                        ModelYear = addCarDto.ModelYear,
+                  };
 
-                  _carDal.Add(car);
+                  _carDal.Add(carToAdd);
                   //return new Result(true,"Ekleme yapıldı")
                   return new SuccessResult("Araba eklendi");
 
