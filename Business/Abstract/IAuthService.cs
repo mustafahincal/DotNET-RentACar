@@ -17,7 +17,8 @@ namespace Business.Abstract
             IResult UserExists(string email);
             IDataResult<AccessToken> CreateAccessToken(User user);
             IResult ChangePassword(ChangePasswordDto changePasswordDto);
-
+            IResult ForgotChangePassword(LoginForgotPasswordDto loginForgotPasswordDto);
             IResult CreateResetCode(ResetPassDto resetPassDto);
+            IResult ControlResetCode(LoginForgotPasswordDto loginForgotPasswordDto);
       }
 }

@@ -94,6 +94,19 @@ namespace Business.Concrete
                   return new SuccessResult("Şifre başarıyla değiştirildi");
 
             }
+            public IResult ForgotChangePassword(LoginForgotPasswordDto loginForgotPasswordDto)
+            {
+                  byte[] passwordHash, passwordSalt;
+                  var userToCheck = _userService.GetByMail(loginForgotPasswordDto.Email).Data;
+
+                  HashingHelper.CreatePasswordHash(loginForgotPasswordDto.NewPass, out passwordHash, out passwordSalt);
+                  userToCheck.PasswordHash = passwordHash;
+                  userToCheck.PasswordSalt = passwordSalt;
+                  _userService.UpdateHelper(userToCheck);
+
+                  return new SuccessResult("Şifre başarıyla değiştirildi");
+
+            }
 
             public IResult UserExists(string email)
             {
@@ -153,6 +166,16 @@ namespace Business.Concrete
                         Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
                             ex.ToString());
                   }
+            }
+
+            public IResult ControlResetCode(LoginForgotPasswordDto loginForgotPasswordDto)
+            {
+                  User userToControl = _userService.GetByMail(loginForgotPasswordDto.Email).Data;
+                  if (userToControl.ResetPassCode == loginForgotPasswordDto.ResetCode)
+                  {
+                        return new SuccessResult("Sıfırlama Kodu Doğru");
+                  }
+                  return new ErrorResult("Sıfırlama Kodu Hatalı");
             }
 
       }

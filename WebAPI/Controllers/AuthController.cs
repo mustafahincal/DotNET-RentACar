@@ -79,5 +79,22 @@ namespace WebAPI.Controllers
 
                   return BadRequest(createResetPassResult);
             }
+
+            [HttpPost("forgotpasswordlogin")]
+            public ActionResult ForgotPasswordLogin(LoginForgotPasswordDto loginForgotPasswordDto)
+            {
+                  var isCodeValid = _authService.ControlResetCode(loginForgotPasswordDto);
+                  if (!isCodeValid.Success)
+                  {
+                        return BadRequest(isCodeValid);
+                  }
+                  var hasChangedPassword = _authService.ForgotChangePassword(loginForgotPasswordDto);
+                  if (!hasChangedPassword.Success)
+                  {
+                        return BadRequest(hasChangedPassword);
+                  }
+                  return Ok(hasChangedPassword);
+            }
+
       }
 }
