@@ -11,7 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
-
+using System.Net.Mail;
+using System.Net;
 
 namespace Business.Concrete
 {
@@ -110,6 +111,43 @@ namespace Business.Concrete
                   return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }
 
+            public IResult CreateResetCode(ResetPassDto resetPassDto)
+            {
+                  string emailToSend = resetPassDto.Email;
+                  string messageHeader = "Şifre Sıfırlama Kodu";
+                  string messageBody = "111111";
+                  SendMessage(emailToSend, messageHeader, messageBody);
+                  return new SuccessResult("Kod Gönderildi");
+            }
+
+            public void SendMessage(string email, string messageBody, string messageHeader)
+            {
+
+                  MailMessage message = new MailMessage();
+                  message.To.Add(new MailAddress(email));
+                  message.From = new MailAddress("denemehncal@gmail.com");
+                  message.Subject = messageHeader;
+                  message.Body = messageBody;
+                  message.IsBodyHtml = true;
+                  message.Priority = MailPriority.High;
+
+                  SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                  NetworkCredential AccountInfo = new NetworkCredential("denemehncal@gmail.com", "hngzfbviibonhevt");
+                  client.UseDefaultCredentials = false;
+                  client.Credentials = AccountInfo;
+                  client.EnableSsl = true;
+                  client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                  try
+                  {
+                        client.Send(message);
+                  }
+                  catch (Exception ex)
+                  {
+                        Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
+                            ex.ToString());
+                  }
+            }
 
       }
 }

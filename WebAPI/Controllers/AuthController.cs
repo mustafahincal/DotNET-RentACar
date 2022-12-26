@@ -66,5 +66,18 @@ namespace WebAPI.Controllers
 
                   return BadRequest(changePasswordResult);
             }
+
+            [HttpPost("createresetpasscode")]
+            public ActionResult CreateResetPassCode(ResetPassDto resetPassDto)
+            {
+                  var createResetPassResult = _authService.CreateResetCode(resetPassDto);
+
+                  if (createResetPassResult.Success)
+                  {
+                        return Ok(createResetPassResult);
+                  }
+
+                  return BadRequest(createResetPassResult);
+            }
       }
 }

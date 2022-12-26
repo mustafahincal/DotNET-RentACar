@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IAuthService
-    {
-        IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password);
-        IDataResult<User> Login(UserForLoginDto userForLoginDto);
-        IResult UserExists(string email);
-        IDataResult<AccessToken> CreateAccessToken(User user);
+      public interface IAuthService
+      {
+            IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password);
+            IDataResult<User> Login(UserForLoginDto userForLoginDto);
+            IResult UserExists(string email);
+            IDataResult<AccessToken> CreateAccessToken(User user);
+            IResult ChangePassword(ChangePasswordDto changePasswordDto);
 
-        IResult ChangePassword(ChangePasswordDto changePasswordDto);
-    }
+            IResult CreateResetCode(ResetPassDto resetPassDto);
+      }
 }
