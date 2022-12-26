@@ -113,10 +113,16 @@ namespace Business.Concrete
 
             public IResult CreateResetCode(ResetPassDto resetPassDto)
             {
+                  int resetCode = 111111;
                   string emailToSend = resetPassDto.Email;
                   string messageHeader = "Şifre Sıfırlama Kodu";
-                  string messageBody = "111111";
-                  SendMessage(emailToSend, messageHeader, messageBody);
+                  string messageBody = "Şifre Sıfırlama Kodunuz : " + resetCode;
+                  SendMessage(emailToSend, messageBody, messageHeader);
+
+                  User userToUpdate = _userService.GetByMail(resetPassDto.Email).Data;
+                  userToUpdate.ResetPassCode = resetCode;
+                  _userService.UpdateHelper(userToUpdate);
+
                   return new SuccessResult("Kod Gönderildi");
             }
 
