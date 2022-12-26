@@ -126,7 +126,9 @@ namespace Business.Concrete
 
             public IResult CreateResetCode(ResetPassDto resetPassDto)
             {
-                  int resetCode = 111111;
+
+                  Random random = new Random();
+                  int resetCode = random.Next(100000, 1000000);
                   string emailToSend = resetPassDto.Email;
                   string messageHeader = "Şifre Sıfırlama Kodu";
                   string messageBody = "Şifre Sıfırlama Kodunuz : " + resetCode;
@@ -171,6 +173,10 @@ namespace Business.Concrete
             public IResult ControlResetCode(LoginForgotPasswordDto loginForgotPasswordDto)
             {
                   User userToControl = _userService.GetByMail(loginForgotPasswordDto.Email).Data;
+                  if (userToControl == null)
+                  {
+                        return new ErrorResult("Kullanıcı Bulunamadı");
+                  }
                   if (userToControl.ResetPassCode == loginForgotPasswordDto.ResetCode)
                   {
                         return new SuccessResult("Sıfırlama Kodu Doğru");
