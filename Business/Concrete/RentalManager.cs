@@ -15,9 +15,11 @@ namespace Business.Concrete
       public class RentalManager : IRentalService
       {
             IRentalDal _rentalDal;
-            public RentalManager(IRentalDal rentalDal)
+            ICarService _carService;
+            public RentalManager(IRentalDal rentalDal, ICarService carService)
             {
                   _rentalDal = rentalDal;
+                  _carService = carService;
             }
             public IResult Add(RentCarDto rentCarDto)
             {
@@ -29,7 +31,10 @@ namespace Business.Concrete
                         Day = rentCarDto.Day
                   };
                   _rentalDal.Add(rentalToAdd);
-                  return new SuccessResult();
+                  var carToUpdate = _carService.GetById(rentCarDto.CarId).Data;
+                  carToUpdate.HasRented = true;
+                  _carService.Update(carToUpdate);
+                  return new SuccessResult("Araç Kiralama Başarıyla Yapıldı");
             }
 
             public IResult Delete(Rental rental)
