@@ -53,10 +53,14 @@ namespace Business.Concrete
                   return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
             }
 
-            public IResult Update(User user)
+            public IResult Update(UpdateUserDto updateUserDto)
             {
-                  _userDal.Update(user);
-                  return new SuccessResult();
+                  User userToUpdate = _userDal.Get(u => u.Id == updateUserDto.UserId);
+                  userToUpdate.Email = updateUserDto.Email;
+                  userToUpdate.FirstName = updateUserDto.FirstName;
+                  userToUpdate.LastName = updateUserDto.LastName;
+                  _userDal.Update(userToUpdate);
+                  return new SuccessResult("Kullanıcı başarıyla güncellendi");
             }
 
             public IResult UpdateHelper(User user)

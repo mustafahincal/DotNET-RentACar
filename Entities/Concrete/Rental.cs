@@ -13,9 +13,8 @@ namespace Entities.Concrete
             public int Id { get; set; }
             public int CarId { get; set; }
             public int UserId { get; set; }
-            public DateTime RentDate { get; set; }
-            public DateTime? ReturnDate { get; set; }
             public decimal Amount { get; set; }
+            public int Day { get; set; }
             public Car Car { get; set; }
             public User User { get; set; }
       }
