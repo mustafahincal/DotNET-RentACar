@@ -29,7 +29,7 @@
 
 # **Installing / Getting started (Yükleme / Projeyi çalıştırma)**
 
-1. git clone https://github.com/mustafahincal/DotNET-RentACar.git
+1. git clone https://github.com/mustafahincal/rentACar-dotnet.git
 2. Click project-server file
    (project-server dosyasına tıkla)
 3. Click project-server.sln and open it Visual Studio
