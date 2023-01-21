@@ -6,7 +6,7 @@
 
 ### E-mail Address: mustafahncal@gmail.com
 
-# **Technologies and techniques used in the project. (Projede kullanılan teknikler ve teknolojiler.)**
+## **Technologies and techniques used in the project. (Projede kullanılan teknikler ve teknolojiler.)**
 
 - **N-Tier Architecture**
 - **AOP**
@@ -27,7 +27,7 @@
 - **Result structure in every part of the project**
   <br>
 
-# **Installing / Getting started (Yükleme / Projeyi çalıştırma)**
+## **Installing / Getting started (Yükleme / Projeyi çalıştırma)**
 
 1. git clone https://github.com/mustafahincal/rentACar-dotnet.git
 2. Click project-server file
