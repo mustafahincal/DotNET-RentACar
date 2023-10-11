@@ -83,10 +83,10 @@ namespace WebAPI.Controllers
                   return BadRequest(result);
             }
 
-            [HttpPost("delete")]
-            public IActionResult Delete(Rental rental)
+            [HttpPost("update")]
+            public IActionResult Update(UpdateRentalDto updateRentalDto)
             {
-                  var result = _rentalService.Delete(rental);
+                  var result = _rentalService.Update(updateRentalDto);
                   if (result.Success)
                   {
                         return Ok(result);
@@ -94,10 +94,10 @@ namespace WebAPI.Controllers
                   return BadRequest(result);
             }
 
-            [HttpPost("update")]
-            public IActionResult Update(UpdateRentalDto updateRentalDto)
+            [HttpGet("delete")]
+            public IActionResult Delete(int id)
             {
-                  var result = _rentalService.Update(updateRentalDto);
+                  var result = _rentalService.Delete(id);
                   if (result.Success)
                   {
                         return Ok(result);

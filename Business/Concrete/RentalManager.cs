@@ -37,8 +37,9 @@ namespace Business.Concrete
                   return new SuccessResult("Araç Kiralama Başarıyla Yapıldı");
             }
 
-            public IResult Delete(Rental rental)
+            public IResult Delete(int id)
             {
+                  var rental = _rentalDal.Get(r => r.Id == id);
                   _rentalDal.Delete(rental);
                   return new SuccessResult();
             }

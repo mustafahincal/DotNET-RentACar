@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
       {
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                  optionsBuilder.UseSqlServer(@"Server=localhost;Database=CarRental;User Id=SA;Password=MyPassword123#;MultipleActiveResultSets=True;");
+                  optionsBuilder.UseSqlServer(@"Server=localhost;Database=CarRental;User Id=SA;Password=reallyStrongPwd123;MultipleActiveResultSets=True;");
 
             }
             public DbSet<Car> Cars { get; set; }
@@ -37,7 +37,7 @@ namespace DataAccess.Concrete.EntityFramework
                 new User
                 {
                     Id = 1,
-                    Email = "admin@mail.com",
+                    Email = "admin@gmail.com",
                     FirstName = "Admin",
                     LastName = "Admin",
                     Status=true,
